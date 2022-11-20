@@ -6,6 +6,9 @@ This package is intended to provide a more streamlined paradigm alternative to u
 ## What's included:
 ### A data preprocessor
 A data preprocessing tool to quickly obtain and visualize the desired data
+
+`New User Version` - this file is intended to be teaching material: a "gentle introduction" to data analysis using data from the Kestrel as an example
+
 #### Interactive plots
 ##### EXAMPLE 1 - Selecting and viewing data
 ![Demo 1](https://user-images.githubusercontent.com/47094586/202836877-0e87a607-f794-4575-97b5-c4c7314a037f.gif)
