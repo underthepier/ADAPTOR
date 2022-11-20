@@ -19,5 +19,7 @@ A data preprocessing tool to quickly obtain and visualize the desired data
 ##### EXAMPLE 4 - Viewing other plot styles
 ![Demo 4](https://user-images.githubusercontent.com/47094586/202838317-3fc4cb9e-1dcc-48d2-9c26-e4289f1f3ae7.gif)
 
-
+## Capabilities 
+### Create telemetry/video data synchronization to enhance the data analysis process
+https://user-images.githubusercontent.com/47094586/202930261-d473606e-115b-430f-9030-2f75dcd1f786.mp4
 
