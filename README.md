@@ -24,5 +24,7 @@ Quickly visualize selected data to efficiently proceed to next steps
 ![Demo 4](https://user-images.githubusercontent.com/47094586/202838317-3fc4cb9e-1dcc-48d2-9c26-e4289f1f3ae7.gif)
 
 ### Capabilities
-#### Create animated plots
-https://user-images.githubusercontent.com/47094586/203422368-81d1bdad-b4bb-4bf4-b7a2-d6050bee104e.mp4
+#### Create animated plots to better investigate relationships between parameters
+https://user-images.githubusercontent.com/47094586/204874630-c1fc652d-7e65-459a-bd44-e63826a6e9f0.mp4
+
+
