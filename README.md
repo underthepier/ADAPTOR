@@ -6,7 +6,9 @@ This package is intended to streamline the data analysis process by automating c
 
 Originally developed in response to challenges faced during importing and cleaning data from multiple kite-based sensors as part of the [NASA funded AREN project](https://www.globe.gov/web/aren-project)
 <br>
-- [I discussed this here at the AGU Fall 2022 Convention](https://agu.confex.com/agu/fm22/meetingapp.cgi/Paper/1156995) (insert official link once it gets published)
+- I discussed this at the [AGU Fall 2022 Meeting](https://www.agu.org/fall-meeting)
+  - [Overview](https://agu.confex.com/agu/fm22/meetingapp.cgi/Paper/1156995)
+  - [Poster](https://agu2022fallmeeting-agu.ipostersessions.com/default.aspx?s=A9-42-65-2A-F6-85-26-13-75-E8-46-13-BA-DA-28-8D&guestview=true)
 
 ## What's included:
 ### A data preprocessor
@@ -26,5 +28,6 @@ Quickly visualize selected data to efficiently proceed to next steps
 ![Demo 4](https://user-images.githubusercontent.com/47094586/202838317-3fc4cb9e-1dcc-48d2-9c26-e4289f1f3ae7.gif)
 
 ### Capabilities
-#### Create animated plots
-https://user-images.githubusercontent.com/47094586/203422368-81d1bdad-b4bb-4bf4-b7a2-d6050bee104e.mp4
+#### Create animated plots to better investigate relationships between parameters
+https://user-images.githubusercontent.com/47094586/204874630-c1fc652d-7e65-459a-bd44-e63826a6e9f0.mp4
+
