@@ -10,6 +10,8 @@ from bokeh.layouts import gridplot, column, row
 from bokeh.io import output_notebook, curdoc
 output_notebook()
 
+cwd = os.getcwd()
+
 #TODO - ADD THE REST OF UNITS
 units = {
     "time": "Time (yyyy-MM-dd hh:mm:ss)",
@@ -112,8 +114,6 @@ def field_test_information(
     return fieldTestParameters, change_history
 
 def open_file(filename):
-    cwd = os.getcwd()
-
     delay_time = 0.1
     print(f"Locating \"{filename}\"", end="")
 
@@ -715,7 +715,7 @@ def trim_data(df, start_index, end_index, units = units):
         print(f"TRIMMING FROM INDEX {start_index} to INDEX {end_index}")
         print("-"*50, trim_date_start, "to", trim_date_end,"-"*50, sep="\n")
         df_trim = df.loc[start_index:end_index]
-        print(f"Review the data and proceed to STEP 8")
+        print(f"Review the data and proceed to STEP 7")
         display(df_trim)
         
         hovercolor = "black"
@@ -779,10 +779,59 @@ def trim_data(df, start_index, end_index, units = units):
 
         return df_trim, trim_date_start, trim_date_end
 
+def save_trim(df_trim, trimmed_file_name, trimmedDataFolderName, prologue, change_history, ch_bound_1, trim_date_start, trim_date_end, cwd=cwd):
+    time = units["time"]
+
+    #Clear/refresh the change history in case this cell is rerun to prevent redundant information being appended
+    change_history = change_history[:ch_bound_1]
+    change_history.append(f"Data was trimmed from {trim_date_start} to {trim_date_end}")
+    #change_history.append(f"Data was trimmed from indices {start_index + 2} and {end_index + 2}") #Plus two for excel indexing
+    
+    #Get rid of the Time Delta column
+    trimmed_file = df_trim.drop(columns="Time Delta").reset_index(drop=True)
+
+    #Rename the Time Delta (seconds) column to Sampling Interval
+    trimmed_file.rename(columns={"Time Delta (seconds)": "Sampling Interval (seconds)"}, inplace = True)
+    change_history.append("Time Delta (seconds) was renamed to Sampling Interval (seconds)")
+
+    #Create elapsed time column (Reference: https://chris35wills.github.io/time_elapsed_pandas/)
+    time_position = trimmed_file.columns.get_loc(time)
+    elapsed_time = trimmed_file.iloc[:,time_position] - trimmed_file.iloc[0,time_position]
+    trimmed_file.insert(1, "Elapsed Time (seconds)", elapsed_time.dt.total_seconds(), allow_duplicates=True)                 
+    change_history.append("Elapsed Time (seconds) column was added")
+
+    prologuepd = pd.Series(prologue)
+    changehistory = pd.Series(change_history)
+
+    df_trim_path_csv = cwd + "/" + trimmedDataFolderName + "/" + trimmed_file_name + ".csv"
+    df_trim_path_excel = cwd + "/" + trimmedDataFolderName + "/" + trimmed_file_name + ".xlsx"
+
+    try:
+        print(f"Saving {trimmed_file_name}.csv")
+        trimmed_file.to_csv(df_trim_path_csv, index=False)
+        print(f"{trimmed_file_name}.csv was saved to {df_trim_path_csv}")
+    except Exception as e:
+        print(e)
+        print(f"Is {trimmed_file_name}.csv currently open on your computer?")
+
+    try:
+        print(f"\nSaving {trimmed_file_name}.xlsx")
+        with pd.ExcelWriter(df_trim_path_excel) as writer:
+            prologuepd.to_excel(writer, sheet_name="Kestrel Info", index = False, header = False)
+            changehistory.to_excel(writer, sheet_name="Data Analysis Record", index = False, header = False)
+            trimmed_file.to_excel(writer, sheet_name="Field Test Data", index = False)
+        print(f"{trimmed_file_name}.xlsx was saved to {df_trim_path_excel}")
+    except Exception as e:
+        print(e)
+        print(f"Is {trimmed_file_name}.xlsx currently open on your computer?")
+    ch_bound_2 = len(change_history)
+    
+    return trimmed_file, change_history, ch_bound_2, prologuepd
+
+
 def baseline(indices, change_history, ch_bound_2, data, values, method, baseline_val_constant):       
     import numpy as np
-    from sklearn import datasets, linear_model
-    print("modules imported")    
+    from sklearn import datasets, linear_model 
     delay_time = 0.1
     time = "Time (yyyy-MM-dd hh:mm:ss)"
     #Check for valid index range (reference: https://datascienceparichay.com/article/python-flatten-a-list-of-lists-to-a-single-list/)
@@ -793,12 +842,9 @@ def baseline(indices, change_history, ch_bound_2, data, values, method, baseline
             validrange = False
     
     if validrange:
-        print("valid range(s)")    
-        print(indices)
         validmethods = ["LINEAR", "CONSTANT", "AVERAGE"]
         method = method.upper()
         if method in validmethods:
-            print("valid method")    
             change_history = change_history[:ch_bound_2] #Refresh the change_history
 
             time_series = data["Elapsed Time (seconds)"].astype("int") #Elapsed Time is of type float and therefore can't be combined with a boolean operation
@@ -807,7 +853,7 @@ def baseline(indices, change_history, ch_bound_2, data, values, method, baseline
 
             for ranges in indices:
                 start = ranges[0]
-                end = ranges[1] + 1
+                end = ranges[1]
                 baseline_starttime = data.loc[ranges[0], time].strftime("%I:%M:%S %p")
                 baseline_endtime = data.loc[ranges[1], time].strftime("%I:%M:%S %p") 
                 print(f"Baselining from {baseline_starttime} at index {start} to {baseline_endtime} at index {end} using baselining method: {method}")
@@ -1016,3 +1062,28 @@ def plot_altvstime(trimmed_file):
     )                             
     ####################################################################
     show(column(f, ranges))
+
+def save_preprocessed(trimmed_file_baselined, preprocessed_data_name, preprocessedDataFolderName, change_history, prologuepd):
+    changehistory = pd.Series(change_history)
+
+    preprocessed_data_path_csv = cwd + "/" + preprocessedDataFolderName + "/" + preprocessed_data_name + ".csv"
+    preprocessed_data_path_excel = cwd + "/" + preprocessedDataFolderName + "/" + preprocessed_data_name + ".xlsx"
+
+    try:
+        print(f"Saving {preprocessed_data_name}.csv")
+        trimmed_file_baselined.to_csv(preprocessed_data_path_csv, index=False)
+        print(f"{preprocessed_data_name}.csv was saved to {preprocessed_data_path_csv}")
+    except Exception as e:
+        print(e)
+        print(f"Is {preprocessed_data_name}.csv currently open on your computer?")
+
+    try:
+        print(f"\nSaving {preprocessed_data_name}.xlsx")
+        with pd.ExcelWriter(preprocessed_data_path_excel) as writer:
+            prologuepd.to_excel(writer, sheet_name="Kestrel Info", index = False, header = False)
+            changehistory.to_excel(writer, sheet_name="Data Analysis Record", index = False, header = False)
+            trimmed_file_baselined.to_excel(writer, sheet_name="Field Test Data with Baseline", index = False)
+        print(f"{preprocessed_data_name}.xlsx was saved to {preprocessed_data_path_excel}")
+    except Exception as e:
+        print(e)
+        print(f"Is {preprocessed_data_name}.xlsx currently open on your computer?")
