@@ -21,6 +21,17 @@ units = {
     "magdir": "Mag. Dir. (Degrees)",
 }
 
+standardized_units = {
+    "Time": "yyyy-MM-dd hh:mm:ss",
+    "Temp": "Celsius",
+    "Rel. Hum.": "%",
+    "Baro.": "mb",
+    "Altitude": "Meters",
+    "Wind Speed": "m/s",
+    "Mag. Dir.": "Degrees",
+    "True Dir.": "Degrees",
+}
+
 
 def field_test_information(
     fieldTestLabel,
@@ -186,19 +197,29 @@ def open_file(filename):
                 print("Units obtained successfully")
                 tm.sleep(delay_time)
 
-                #Combine the headers and units into one row
-                columns = []
-                for i in range(len(headers)):
-                    columns.append(headers[i] + " (" + units[i] + ")")
-
                 #Store the data values into a pandas dataframe
                 print("\nObtaining measurements")
                 tm.sleep(delay_time)        
-                df = pd.read_csv(f, names=columns)
+                df = pd.read_csv(f, names=headers)
+                f.close()
+
+                #Keep the standardized columns
+                for i, n in zip(headers, units):
+                    if i in standardized_units:
+                        if standardized_units[i] == n:
+                            new_label = i + " (" + n + ")"
+                            df.rename(columns = {i: new_label}, inplace = True)
+                        else:
+                            #TODO
+                            print(f"Need to convert {n} to {standardized_units[i]}")
+                    else:
+                        df.drop(columns=i, inplace=True)                
+                            
+                columns = df.columns
+
                 df_rows = df.shape[0]
                 print("Data obtained successfully")
                 tm.sleep(delay_time)
-                f.close()
                 print(f"\n{df_rows} rows in file")
                 print("\nReview data and proceed to STEP 3")
 
@@ -353,19 +374,12 @@ def calculate_timedeltas(df, columns, timedeltas_read, change_history):
             'Time Delta',
             'Time Delta (seconds)',
             'Temp (Celsius)',
-            'Wet Bulb Temp. (Celsius)', 
-            'Rel. Hum. (%)', 'Baro. (mb)',
+            'Rel. Hum. (%)', 
+            'Baro. (mb)',
             'Altitude (Meters)', 
-            'Station P. (mb)', 
             'Wind Speed (m/s)',
-            'Heat Index (Celsius)', 
-            'Dew Point (Celsius)', 
-            'Dens. Alt. (Meters)',
-            'Crosswind (m/s)', 
-            'Headwind (m/s)', 
             'Mag. Dir. (Degrees)',
             'True Dir. (Degrees)', 
-            'Wind Chill (Celsius)', 
             ]]
 
             print("Time Deltas have been calculated")
@@ -763,6 +777,8 @@ def trim_data(df, start_index, end_index, units = units):
 
         show(column(timefigures[0:2]))
 
+        return df_trim, trim_date_start, trim_date_end
+
 def baseline(indices, change_history, ch_bound_2, data, values, method, baseline_val_constant):       
     import numpy as np
     from sklearn import datasets, linear_model
@@ -873,22 +889,16 @@ def review_baseline(baseline_series, AOG_series, baseline_ranges, baseline_metho
     'Elapsed Time (seconds)',
     'Sampling Interval (seconds)',
     'Temp (Celsius)',
-    'Wet Bulb Temp. (Celsius)', 
-    'Rel. Hum. (%)', 'Baro. (mb)',
+    'Rel. Hum. (%)', 
+    'Baro. (mb)',
     'Altitude (Meters)',
     baseline_series.name,
     AOG_series.name,
-    'Station P. (mb)', 
     'Wind Speed (m/s)',
-    'Heat Index (Celsius)', 
-    'Dew Point (Celsius)', 
-    'Dens. Alt. (Meters)',
-    'Crosswind (m/s)', 
-    'Headwind (m/s)', 
     'Mag. Dir. (Degrees)',
-    'True Dir. (Degrees)', 
-    'Wind Chill (Celsius)', 
+    'True Dir. (Degrees)',
     ]]  
+
     dot_size = 0.5
     
     altvstimehover = HoverTool( #API Reference: https://docs.bokeh.org/en/latest/docs/user_guide/tools.html#hovertool
