@@ -1,20 +1,21 @@
-# Python Data Analysis Package for the Kestrel 5500 weather meters
+# A.D.A.P.T.O.R
 
 ## Overview
-This package is intended to streamline the data analysis process by automating certain tasks
+A.D.A.P.T.O.R stands for _**A**EROKATS **D**ata **A**nalysis and **P**rocessing **T**ools for **O**bservations and **R**esearch_
 <br>
 
-Originally developed in response to challenges faced during importing and cleaning data from multiple kite-based sensors as part of the [NASA funded AREN project](https://www.globe.gov/web/aren-project)
+A.D.A.P.T.O.R is a set of tools that are intended to streamline the data analysis process for kite-based atmospheric observations by automating certain tasks and providing various functionalities
 <br>
-- I discussed this at the [AGU Fall 2022 Meeting](https://www.agu.org/fall-meeting)
+
+Originally developed in response to challenges faced when working with data from multiple kite-based sensors as part of the [NASA funded AREN project](https://www.globe.gov/web/aren-project)
+<br>
+- First initially presented publicly at the [AGU Fall 2022 Meeting](https://www.agu.org/fall-meeting)
   - [Overview](https://agu.confex.com/agu/fm22/meetingapp.cgi/Paper/1156995)
   - [Poster](https://agu2022fallmeeting-agu.ipostersessions.com/default.aspx?s=A9-42-65-2A-F6-85-26-13-75-E8-46-13-BA-DA-28-8D&guestview=true)
 
 ## What's included:
 ### A data preprocessor
 A data preprocessing tool to quickly obtain and visualize the desired data
-
-`New User Version` - this file is intended to be teaching material: a "gentle introduction" to data analysis using data from the Kestrel as an example
 
 #### Interactive plots
 ##### EXAMPLE 1 - Selecting and viewing data
