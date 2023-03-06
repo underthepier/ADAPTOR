@@ -17,16 +17,19 @@ Originally developed in response to challenges faced when working with data from
 ### A data preprocessor
 A data preprocessing tool to quickly obtain and visualize the desired data
 
-#### Interactive plots
+#### Demo of the preprocessor
 ##### EXAMPLE 1 - Selecting and viewing data
 Quickly visualize selected data to efficiently proceed to next steps
-![Demo 1](https://user-images.githubusercontent.com/47094586/202836877-0e87a607-f794-4575-97b5-c4c7314a037f.gif)
-##### EXAMPLE 2 - Viewing data
-![Demo 2](https://user-images.githubusercontent.com/47094586/202837874-9d50c74d-2750-4b45-b708-34e54734d780.gif)
-##### EXAMPLE 3 - Viewing pressure and altitude on the same graph
-![Demo 3](https://user-images.githubusercontent.com/47094586/202838154-4874284e-1031-4c04-8869-2142763d8b89.gif)
-##### EXAMPLE 4 - Viewing other plot styles
-![Demo 4](https://user-images.githubusercontent.com/47094586/202838317-3fc4cb9e-1dcc-48d2-9c26-e4289f1f3ae7.gif)
+![Demo 1](https://user-images.githubusercontent.com/47094586/223017283-c4f85638-4e75-4197-a84f-d97bae76985e.gif)
+##### EXAMPLE 2 - Trimming data
+Trimming to a standard format
+![Example 2 - Trimming data](https://user-images.githubusercontent.com/47094586/223018697-ec59f3d5-4489-4cb1-b938-97558ff348d4.gif)
+##### EXAMPLE 3 - Generate standardized set of plots
+Generating a set of time series plots
+![Example 3 - Generate standardized set of time series plots](https://user-images.githubusercontent.com/47094586/223020526-c2cc12e9-f2b2-4cea-8cb3-0384720f7443.gif)
+##### EXAMPLE 4 - Linked Bokeh plots
+Highlighting, zooming, and hovering over data
+![Example 4 - Interactivity](https://user-images.githubusercontent.com/47094586/223021039-64039978-1436-4c2e-aa79-529374749065.gif)
 
 ### Capabilities
 #### Create animated plots to better investigate relationships between parameters
