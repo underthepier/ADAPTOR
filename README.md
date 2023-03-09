@@ -33,5 +33,8 @@ Highlighting, zooming, and hovering over data
 
 ### Capabilities
 #### Create animated plots to better investigate relationships between parameters
+##### Example 1
 https://user-images.githubusercontent.com/47094586/204874630-c1fc652d-7e65-459a-bd44-e63826a6e9f0.mp4
 
+##### Example 2
+https://user-images.githubusercontent.com/47094586/224164947-ceb3280d-2a10-4602-bc6b-ded7c904d83f.mp4
