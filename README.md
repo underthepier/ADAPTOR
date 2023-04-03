@@ -45,5 +45,6 @@ Open Google Colab and paste the following link into the URL field of the GitHub 
 https://github.com/underthepier/ADAPTOR/blob/AREN/ADAPTOR%20-%20Preprocessor%20-%20Google%20Colab%20Version.ipynb
 ![Opening ADAPTOR](https://user-images.githubusercontent.com/47094586/224764471-2925cdb5-50ac-4fb2-a5ea-b31ad736ac27.gif)
 
-
+## Contact
+Contact DJ Viray (developer) for any inquiries at dj.viray@drexel.edu
 
